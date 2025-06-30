@@ -6,7 +6,7 @@ use axum::{
 use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize)]
 pub struct ErrorResponse {
-    pub succes: bool,
+    pub success: bool,
     pub error: String,
 }
 
@@ -38,9 +38,34 @@ pub struct AccoutsResponse {
 
 // -> Json(CreateTokenResponse)
 pub async fn create_token(Json(payload): Json<CreateTokenRequest>) -> impl IntoResponse {
+    fn is_base58_valid(s: &str) -> bool {
+        bs58::decode(s).into_vec().is_ok()
+    }
+    if !is_base58_valid(&payload.mint_authority) {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(ErrorResponse {
+                success: false,
+                error: "Invalid mint authority (Base58)".to_string(),
+            }),
+        )
+            .into_response();
+    }
+
+    // Validate mint is Base58
+    if !is_base58_valid(&payload.mint) {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(ErrorResponse {
+                success: false,
+                error: "Invalid mint (Base58)".to_string(),
+            }),
+        )
+            .into_response();
+    }
     if payload.decimals != 6 {
         let error = ErrorResponse {
-            succes: false,
+            success: false,
             error: "Name cannot be empty".to_string(),
         };
         return (StatusCode::BAD_REQUEST, Json(error)).into_response();
