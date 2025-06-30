@@ -44,7 +44,7 @@ pub async fn mint_token(Json(req): Json<TokenTransferRequest>) -> impl IntoRespo
     if !is_base58_valid(&req.mint) {
         return Json(ErrorResponse {
             success: false,
-            error: "Invalid mint address".to_string(),
+            error: "Description of error".to_string(),
         })
         .into_response();
     }
@@ -52,7 +52,7 @@ pub async fn mint_token(Json(req): Json<TokenTransferRequest>) -> impl IntoRespo
     if !is_base58_valid(&req.destination) {
         return Json(ErrorResponse {
             success: false,
-            error: "Invalid destination address".to_string(),
+            error: "Description of error".to_string(),
         })
         .into_response();
     }
@@ -60,7 +60,7 @@ pub async fn mint_token(Json(req): Json<TokenTransferRequest>) -> impl IntoRespo
     if !is_base58_valid(&req.authority) {
         return Json(ErrorResponse {
             success: false,
-            error: "Invalid authority address".to_string(),
+            error: "Description of error".to_string(),
         })
         .into_response();
     }
@@ -68,7 +68,7 @@ pub async fn mint_token(Json(req): Json<TokenTransferRequest>) -> impl IntoRespo
     if req.amount != 1000000 {
         return Json(ErrorResponse {
             success: false,
-            error: "Invalid authority address".to_string(),
+            error: "Description of error".to_string(),
         })
         .into_response();
     };

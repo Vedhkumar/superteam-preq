@@ -32,7 +32,7 @@ pub async fn sign_message(Json(payload): Json<Request>) -> impl IntoResponse {
     if bs58::decode(&payload.secret).into_vec().is_err() {
         let error = ErrorResponse {
             succes: false,
-            error: "Invalid base58 secret key".to_string(),
+            error: "Description of error".to_string(),
         };
         return (StatusCode::BAD_REQUEST, Json(error)).into_response();
     }

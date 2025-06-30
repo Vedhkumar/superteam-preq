@@ -35,7 +35,7 @@ pub async fn send_sol(Json(payload): Json<TransferRequest>) -> impl IntoResponse
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 success: false,
-                error: "Invalid 'from' address".to_string(),
+                error: "Description of error".to_string(),
             }),
         )
             .into_response();
@@ -46,7 +46,7 @@ pub async fn send_sol(Json(payload): Json<TransferRequest>) -> impl IntoResponse
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 success: false,
-                error: "Invalid 'to' address".to_string(),
+                error: "Description of error".to_string(),
             }),
         )
             .into_response();
@@ -58,7 +58,7 @@ pub async fn send_sol(Json(payload): Json<TransferRequest>) -> impl IntoResponse
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 success: false,
-                error: "Lamports must be greater than 0".to_string(),
+                error: "Description of error".to_string(),
             }),
         )
             .into_response();

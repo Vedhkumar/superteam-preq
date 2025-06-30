@@ -36,7 +36,7 @@ pub async fn verify_message(Json(payload): Json<SignatureVerifyRequest>) -> impl
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 success: false,
-                error: "Invalid message content".to_string(),
+                error: "Description of error".to_string(),
             }),
         )
             .into_response();
@@ -47,7 +47,7 @@ pub async fn verify_message(Json(payload): Json<SignatureVerifyRequest>) -> impl
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 success: false,
-                error: "Invalid base58 public key".to_string(),
+                error: "Description of error".to_string(),
             }),
         )
             .into_response();

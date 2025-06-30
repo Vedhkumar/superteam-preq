@@ -46,7 +46,7 @@ pub async fn create_token(Json(payload): Json<CreateTokenRequest>) -> impl IntoR
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 success: false,
-                error: "Invalid mint authority (Base58)".to_string(),
+                error: "Description of error".to_string(),
             }),
         )
             .into_response();
@@ -58,7 +58,7 @@ pub async fn create_token(Json(payload): Json<CreateTokenRequest>) -> impl IntoR
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 success: false,
-                error: "Invalid mint (Base58)".to_string(),
+                error: "Description of error".to_string(),
             }),
         )
             .into_response();
@@ -66,7 +66,7 @@ pub async fn create_token(Json(payload): Json<CreateTokenRequest>) -> impl IntoR
     if payload.decimals != 6 {
         let error = ErrorResponse {
             success: false,
-            error: "Name cannot be empty".to_string(),
+            error: "Description of error".to_string(),
         };
         return (StatusCode::BAD_REQUEST, Json(error)).into_response();
     };
