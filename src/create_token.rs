@@ -12,7 +12,7 @@ pub struct ErrorResponse {
 
 #[derive(Deserialize, Serialize)]
 pub struct CreateTokenRequest {
-    pub mintAuthority: String,
+    pub mint_authority: String,
     pub mint: String,
     pub decimals: u8,
 }

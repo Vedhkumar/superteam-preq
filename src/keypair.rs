@@ -1,12 +1,6 @@
 use axum::{Json, http::StatusCode, response::IntoResponse};
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize)]
-pub struct ErrorResponse {
-    pub succes: bool,
-    pub error: String,
-}
-
 #[derive(Deserialize, Serialize)]
 pub struct KeypairResponse {
     pub success: bool,
