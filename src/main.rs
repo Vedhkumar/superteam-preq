@@ -2,12 +2,14 @@ use axum::{Router, routing::post};
 mod create_token;
 mod keypair;
 mod mint_token;
+mod send_sol;
 mod sign_message;
 mod verify_message;
 
 use create_token::create_token;
 use keypair::generate_keypair;
 use mint_token::mint_token;
+use send_sol::send_sol;
 use sign_message::sign_message;
 use verify_message::verify_message;
 #[tokio::main]
@@ -18,7 +20,8 @@ async fn main() {
         .route("/token/create", post(create_token))
         .route("/message/sign", post(sign_message))
         .route("/token/mint", post(mint_token))
-        .route("/message/verify", post(verify_message));
+        .route("/message/verify", post(verify_message))
+        .route("/send/token", post(send_sol));
 
     // run our app with hyper, listening globally on port 3000
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
