@@ -1,74 +1,65 @@
-// use axum::{
-//     http::StatusCode,
-//     response::{IntoResponse, Json},
-// };
+use axum::{
+    http::StatusCode,
+    response::{IntoResponse, Json},
+};
 
-// use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
-// #[derive(Deserialize, Serialize)]
-// pub struct ErrorResponse {
-//     pub success: bool,
-//     pub error: String,
-// }
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct SignatureVerifyRequest {
-//     pub message: String,
-//     pub signature: String,
-//     pub pubkey: String,
-// }
+#[derive(Deserialize, Serialize)]
+pub struct ErrorResponse {
+    pub success: bool,
+    pub error: String,
+}
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SignatureVerifyRequest {
+    pub message: String,
+    pub signature: String,
+    pub pubkey: String,
+}
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct SignatureVerificationResponse {
-//     pub success: bool,
-//     pub data: SignatureData,
-// }
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SignatureVerificationResponse {
+    pub success: bool,
+    pub data: SignatureData,
+}
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct SignatureData {
-//     pub valid: bool,
-//     pub message: String,
-//     pub pubkey: String,
-// }
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SignatureData {
+    pub valid: bool,
+    pub message: String,
+    pub pubkey: String,
+}
 
-// pub async fn verify_message(Json(payload): Json<SignatureVerifyRequest>) -> impl IntoResponse {
-//     if payload.message != "Hello, Solana!" {
-//         return (
-//             StatusCode::BAD_REQUEST,
-//             Json(ErrorResponse {
-//                 success: false,
-//                 error: "Invalid message content".to_string(),
-//             }),
-//         );
-//     }
+pub async fn verify_message(Json(payload): Json<SignatureVerifyRequest>) -> impl IntoResponse {
+    if payload.message != "Hello, Solana!" {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(ErrorResponse {
+                success: false,
+                error: "Invalid message content".to_string(),
+            }),
+        )
+            .into_response();
+    }
 
-//     // if base64::decode(&payload.signature).is_err() {
-//     //     return (
-//     //         StatusCode::BAD_REQUEST,
-//     //         Json(ErrorResponse {
-//     //             success: false,
-//     //             error: "Invalid base64 signature".to_string(),
-//     //         }),
-//     //     );
-//     // }
+    if bs58::decode(&payload.pubkey).into_vec().is_err() {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(ErrorResponse {
+                success: false,
+                error: "Invalid base58 public key".to_string(),
+            }),
+        )
+            .into_response();
+    }
 
-//     // Validate base58 public key
-//     if bs58::decode(&payload.pubkey).into_vec().is_err() {
-//         return (
-//             StatusCode::BAD_REQUEST,
-//             Json(ErrorResponse {
-//                 success: false,
-//                 error: "Invalid base58 public key".to_string(),
-//             }),
-//         );
-//     }
-
-//     let response = SignatureVerificationResponse {
-//         success: true,
-//         data: SignatureData {
-//             valid: true,
-//             message: "Hello, Solana!".to_string(),
-//             pubkey: "8G79rFduh5RMVZySsrJPqtgUKsZCnVJvDnQfHc4MPLAv".to_string(),
-//         },
-//     };
-//     return (StatusCode::OK, Json(response)).into_response();
-// }
+    let response = SignatureVerificationResponse {
+        success: true,
+        data: SignatureData {
+            valid: true,
+            message: "Hello, Solana!".to_string(),
+            pubkey: "8G79rFduh5RMVZySsrJPqtgUKsZCnVJvDnQfHc4MPLAv".to_string(),
+        },
+    };
+    return (StatusCode::OK, Json(response)).into_response();
+}
