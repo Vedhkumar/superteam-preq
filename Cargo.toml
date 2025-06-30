@@ -10,3 +10,4 @@ tokio = { version = "1.45.1", features = ["full"] }
 # solana-sdk ="1.18.26"
 # solana-client ="1.18.26"
 bs58 = "0.5.1"
+base64 = "0.22.1"

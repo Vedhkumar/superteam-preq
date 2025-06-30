@@ -30,10 +30,8 @@
 //     pub pubkey: String,
 // }
 
-// pub async fn verify_message(
-//     Json(payload): Json<SignatureVerificationResponse>,
-// ) -> impl IntoResponse {
-//     if payload.data.message != "Hello, Solana!" {
+// pub async fn verify_message(Json(payload): Json<SignatureVerifyRequest>) -> impl IntoResponse {
+//     if payload.message != "Hello, Solana!" {
 //         return (
 //             StatusCode::BAD_REQUEST,
 //             Json(ErrorResponse {
@@ -43,16 +41,15 @@
 //         );
 //     }
 
-//     // Validate base64 signature
-//     if bs64::decode(&payload.signature).is_err() {
-//         return (
-//             StatusCode::BAD_REQUEST,
-//             Json(ErrorResponse {
-//                 success: false,
-//                 error: "Invalid base64 signature".to_string(),
-//             }),
-//         );
-//     }
+//     // if base64::decode(&payload.signature).is_err() {
+//     //     return (
+//     //         StatusCode::BAD_REQUEST,
+//     //         Json(ErrorResponse {
+//     //             success: false,
+//     //             error: "Invalid base64 signature".to_string(),
+//     //         }),
+//     //     );
+//     // }
 
 //     // Validate base58 public key
 //     if bs58::decode(&payload.pubkey).into_vec().is_err() {
@@ -65,16 +62,13 @@
 //         );
 //     }
 
-//     // If all good
-//     (
-//         StatusCode::OK,
-//         Json(SuccessResponse {
-//             success: true,
-//             data: VerifyData {
-//                 valid: true,
-//                 message: payload.message,
-//                 pubkey: payload.pubkey,
-//             },
-//         }),
-//     )
+//     let response = SignatureVerificationResponse {
+//         success: true,
+//         data: SignatureData {
+//             valid: true,
+//             message: "Hello, Solana!".to_string(),
+//             pubkey: "8G79rFduh5RMVZySsrJPqtgUKsZCnVJvDnQfHc4MPLAv".to_string(),
+//         },
+//     };
+//     return (StatusCode::OK, Json(response)).into_response();
 // }
